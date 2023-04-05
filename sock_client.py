@@ -28,4 +28,6 @@ rec_thread.start()
 
 while True:
     data = input()
+    if data == '0':
+        sock.close()
     sock_send(f"mila: {data}".encode('ascii'))

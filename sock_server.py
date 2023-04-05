@@ -8,7 +8,7 @@ serv_sock = socket.socket(socket.AF_INET,     #задаем семейство �
                           proto=0             #выбираем протокол по умолчанию для TCP, т.е. IP
                           )
 
-print(type(serv_sock))
+# print(type(serv_sock))
 
 HOST = '127.0.0.1'
 PORT = 53210
