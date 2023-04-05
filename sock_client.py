@@ -9,11 +9,11 @@ PORT = 53210
 
 # Коннектимся
 
-sock.connect(HOST,PORT)
+sock.connect((HOST,PORT))
 
 # Подготовим HTTP-запрос
 def sock_send(data):
-    sock.send(data)
+    sock.sendall(data)
 
 def sock_recieve():
 # Передаём размер буфера - по сколько байт будем перехватывать с нашей сетевой карты приходящих на неё данных и заносить в переменную
