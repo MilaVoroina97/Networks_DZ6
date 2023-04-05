@@ -1,4 +1,5 @@
 import socket
+import threading
 
 # создаем серверный сокет:
 
@@ -11,23 +12,50 @@ print(type(serv_sock))
 
 HOST = '127.0.0.1'
 PORT = 53210
-
+hosts = []#создаем отдельный список хостов-клиентов
+names = []#и их имена
 
 serv_sock.bind((HOST,PORT))# привязываем созданные сокет к сетевому адаптеру
 backlog = 10#Размер очереди входящих подключений
 serv_sock.listen(backlog)
-client_sock,client_adr = serv_sock.accept()#получаем соединение из очереди клиентов 
-print('Connected by',client_adr)
 
-# Чтение и запись в клиентский сокет:
+# Функция установления соединения с клиентами и получение сообщений от них:
 
-while True:
-    data = client_sock.recv(1024)
-    if not data:
-        break
-    client_sock.sendall(data)
+def server_receive():
+    while True:
+        client_sock,client_addr = serv_sock.accept()
+        print('Connected by', client_addr)
+        client_sock.send('Mila'.encode('ascii'))
+        NICK = client_sock.recv(1024).decode('ascii')
+        print('Nick: ',NICK)
+        names.append(NICK)
+        hosts.append(client_sock)
+        send_to_all("Connection")
+        client_sock.send('Connected to server'.encode('ascii'))
+        thread = threading.Thread(target=get_message,args=(client_sock,))
+        thread.start()
 
-client_sock.close()
+# Функиция для отправки сообщения всем хостам:
+
+def send_to_all(data):
+    for host in hosts:
+        host.send(data)
+
+# Функиция для получения сообщения сервером от хоста:
+
+def get_message(host):
+    while True:
+        data = host.recv(1024)
+        send_to_all(data)
+
+
+server_receive()
+
+
+
+
+
+
 
 
 
