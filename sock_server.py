@@ -13,7 +13,7 @@ HOST = '127.0.0.1'
 PORT = 53210
 
 
-serv_sock.bind(HOST,PORT)# привязываем созданные сокет к сетевому адаптеру
+serv_sock.bind((HOST,PORT))# привязываем созданные сокет к сетевому адаптеру
 backlog = 10#Размер очереди входящих подключений
 serv_sock.listen(backlog)
 client_sock,client_adr = serv_sock.accept()#получаем соединение из очереди клиентов 

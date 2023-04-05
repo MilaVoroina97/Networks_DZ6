@@ -2,7 +2,7 @@ import socket, threading
 
 
 # Открываем сокет
-sock = socket.socket()
+sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 HOST = '127.0.0.1'
 PORT = 53210
