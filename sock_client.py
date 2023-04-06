@@ -12,7 +12,8 @@ PORT = 53210
 sock.connect((HOST,PORT))
 
 # Подготовим HTTP-запрос
-def sock_send(data):
+def sock_send():
+    data = input('Nick : ').encode('ascii')
     sock.sendall(data)
 
 def sock_recieve():
@@ -21,7 +22,7 @@ def sock_recieve():
         data_in = sock.recv(1024)
         print(data_in.decode('ascii'))
 
-sock_send(b"mila")
+sock_send()
 
 rec_thread = threading.Thread(target=sock_recieve)
 rec_thread.start()
@@ -30,4 +31,5 @@ while True:
     data = input()
     if data == '0':
         sock.close()
-    sock_send(f"mila: {data}".encode('ascii'))
+    # sock_send(f"mila: {data}".encode('ascii'))
+    sock_send()

@@ -16,21 +16,21 @@ hosts = []#создаем отдельный список хостов-клие�
 names = []#и их имена
 
 serv_sock.bind((HOST,PORT))# привязываем созданные сокет к сетевому адаптеру
-backlog = 10#Размер очереди входящих подключений
-serv_sock.listen(backlog)
+# backlog = 10#Размер очереди входящих подключений
+serv_sock.listen()
 
 # Функция установления соединения с клиентами и получение сообщений от них:
 
 def server_receive():
     while True:
         client_sock,client_addr = serv_sock.accept()
-        print('Connected by', client_addr)
-        client_sock.send('Mila'.encode('ascii'))
+        print("Connected to {}".format(str(client_addr)))
+        client_sock.send('Nickname: '.encode('ascii'))
         NICK = client_sock.recv(1024).decode('ascii')
-        print('Nick: ',NICK)
+        print("Nickname is {}".format(NICK))
         names.append(NICK)
         hosts.append(client_sock)
-        send_to_all("Connection")
+        send_to_all("{} is here".format(NICK).encode('ascii'))
         client_sock.send('Connected to server'.encode('ascii'))
         thread = threading.Thread(target=get_message,args=(client_sock,))
         thread.start()
@@ -47,7 +47,6 @@ def get_message(host):
     while True:
         data = host.recv(1024)
         send_to_all(data)
-
 
 server_receive()
 
