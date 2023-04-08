@@ -5,7 +5,7 @@ import socket, threading
 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 HOST = '127.0.0.1'
-PORT = 53210
+PORT = 55555
 
 # Коннектимся
 
