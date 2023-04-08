@@ -31,5 +31,5 @@ while True:
     data = input()
     if data == '0':
         sock.close()
-    # sock_send(f"mila: {data}".encode('ascii'))
+    sock_send(f"mila: {data}".encode('ascii'))
     sock_send()
